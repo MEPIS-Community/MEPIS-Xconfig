@@ -52,25 +52,13 @@ public:
     void refreshMouse();
     void refreshMonitor();
     void brandComboChanged();
-    void refreshNvidia();
-    void brand2ComboChanged();
 
     void applyRestore();
     void applyGeneral();
     void applyMouse();
     void applyMonitor();
-    void applyNvidia();
-    void nvDriverEnable();
-    void nvidiaDriverEnable();
 
 public slots:
-    void nvStart();
-    void nvTime();
-    void nvidiaUpdateDone(int exitCode, QProcess::ExitStatus exitStatus);
-    void nvidiaDriverDone(int exitCode, QProcess::ExitStatus exitStatus);
-    void legacyUpdateDone(int exitCode, QProcess::ExitStatus exitStatus);
-    void legacyDriverDone(int exitCode, QProcess::ExitStatus exitStatus);
-    void nvDriverDone(int exitCode, QProcess::ExitStatus exitStatus);
 
     virtual void show();
     virtual void on_diskCombo_activated();
@@ -78,15 +66,7 @@ public slots:
     virtual void on_modelCombo_activated();
     virtual void on_horizEdit_textEdited();
     virtual void on_vertEdit_textEdited();
-    virtual void on_brand2Combo_activated();
-    virtual void on_model2Combo_activated();
-    virtual void on_horiz2Edit_textEdited();
-    virtual void on_vert2Edit_textEdited();
     virtual void on_tabWidget_currentChanged();
-    virtual void on_nvidiaButton_clicked();
-    virtual void on_legacyButton_clicked();
-    virtual void on_nvButton_clicked();
-    virtual void on_nvVesaButton_clicked();
     virtual void on_ps2CheckBox_clicked();
     virtual void on_usbCheckBox_clicked();
     virtual void on_serialCheckBox_clicked();
