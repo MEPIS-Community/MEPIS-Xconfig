@@ -240,8 +240,7 @@ void MConfig::refreshGeneral() {
   i = strlen(line);
   line[i-1] = '\0';
   pclose(fp);
-  QString vga = QString("%1").arg(line);
-  gfxAdapterEdit->setText(vga);
+  gfxAdapterEdit->setText(line);
 
   buttonApply->setEnabled(false);
 }
