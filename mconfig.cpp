@@ -148,12 +148,6 @@ void MConfig::refresh() {
       buttonOk->setEnabled(true);
       break;
 
-    case 3:
-      refreshMonitor();
-      buttonApply->setEnabled(false);
-      buttonOk->setEnabled(true);
-      break;
-
     default:
       refreshRestore();
       buttonApply->setEnabled(false);
@@ -271,59 +265,6 @@ void MConfig::refreshMouse() {
   appleCheckBox->setChecked(val.isEmpty());
 }
 
-void MConfig::refreshMonitor() {
-  //monitorCombo
-  QString val = getCmdValue("grep 'VendorName' /etc/X11/xorg.conf", "VendorName", " ", "\"");
-  if (val.isEmpty()) {
-    brandCombo->setCurrentIndex(brandCombo->findText("unknown"));
-    brandComboChanged();
-    modelCombo->setCurrentIndex(modelCombo->findText("unknown"));
-  } else {
-    brandCombo->setCurrentIndex(brandCombo->findText(val.trimmed()));
-    if (brandCombo->currentText().isEmpty()) {
-      brandCombo->setCurrentIndex(brandCombo->findText("unknown"));
-      brandComboChanged();
-      modelCombo->setCurrentIndex(modelCombo->findText("unknown"));
-    } else {
-      brandComboChanged();
-      val = getCmdValue("grep 'ModelName' /etc/X11/xorg.conf", "ModelName", " ", "\"");
-      modelCombo->setCurrentIndex(modelCombo->findText(val.trimmed()));
-    }
-  }
-  val = getCmdValue("grep 'HorizSync' /etc/X11/xorg.conf", "HorizSync", " ", "#");
-  horizEdit->setText(val.trimmed());
-  val = getCmdValue("grep 'VertRefresh' /etc/X11/xorg.conf", "VertRefresh", " ", "#");
-  vertEdit->setText(val.trimmed());
-}
-
-void MConfig::brandComboChanged() {
-  QString model, cmd;
-
-  modelCombo->clear();
-  if (brandCombo->currentText().contains("unknown") > 0) {
-    modelCombo->addItem("unknown");
-    return;
-  }
-
-  if (brandCombo->currentText().contains("KDS") > 0) {
-    cmd = QString("grep '^%1' /usr/share/hwdata/MonitorsDB").arg("Korea Data Systems");
-  } else {
-    cmd = QString("grep '^%1' /usr/share/hwdata/MonitorsDB").arg(brandCombo->currentText());
-  }
-  QStringList strings = getCmdOuts(cmd);
-  if (strings.isEmpty()) {
-    modelCombo->addItem("unknown");
-    return;
-  }
-
-  for (QStringList::Iterator it = strings.begin(); it != strings.end(); ++it) {
-    model = *it;
-    model = model.section(";", 1, 1).remove(brandCombo->currentText()).trimmed();
-    modelCombo->addItem(model);
-  }
-  on_modelCombo_activated();
-}
-
 
 // apply but do not close
 void MConfig::applyRestore() {
@@ -413,27 +354,6 @@ void MConfig::applyMouse() {
   refresh();
 }
 
-void MConfig::applyMonitor() {
-  // brand
-  QString cmd = QString(" VendorName \"%1\"").arg(brandCombo->currentText());
-  replaceStringInFile(" VendorName.*", cmd, "/etc/X11/xorg.conf");
-
-  // brand
-  cmd = QString(" ModelName \"%1\"").arg(modelCombo->currentText());
-  replaceStringInFile(" ModelName.*", cmd, "/etc/X11/xorg.conf");
-
-  // vert
-  cmd = QString(" VertRefresh  %1").arg(vertEdit->text());
-  replaceStringInFile(" VertRefresh.*", cmd, "/etc/X11/xorg.conf");
-
-  // horiz
-  cmd = QString(" HorizSync    %1").arg(horizEdit->text());
-  replaceStringInFile(" HorizSync.*", cmd, "/etc/X11/xorg.conf");
-
-  QMessageBox::information(0, QString::null,
-    tr("The monitor specs have been updated. The new config will take effect when you restart X or reboot"));
-  refresh();
-}
 
 
 /////////////////////////////////////////////////////////////////////////
@@ -447,28 +367,6 @@ void MConfig::show() {
 // disk selection changed, rebuild root
 void MConfig::on_diskCombo_activated() {
   diskComboChanged();
-}
-
-void MConfig::on_brandCombo_activated() {
-  brandComboChanged();
-}
-
-void MConfig::on_modelCombo_activated() {
-  QString cmd = QString("grep '.*%1.*%2' /usr/share/hwdata/MonitorsDB").arg(brandCombo->currentText()).arg( modelCombo->currentText());
-  QString model = getCmdOut(cmd);
-  QString part = model.section(";", 3, 3).trimmed();
-  horizEdit->setText(part);
-  part = model.section(";", 4, 4).trimmed();
-  vertEdit->setText(part);
-  buttonApply->setEnabled(true);
-}
-
-void MConfig::on_horizEdit_textEdited() {
-  buttonApply->setEnabled(true);
-}
-
-void MConfig::on_vertEdit_textEdited() {
-  buttonApply->setEnabled(true);
 }
 
 void MConfig::on_tabWidget_currentChanged() {
@@ -532,12 +430,6 @@ void MConfig::on_buttonApply_clicked() {
     case 2:
       setCursor(QCursor(Qt::WaitCursor));
       applyMouse();
-      setCursor(QCursor(Qt::ArrowCursor));
-      break;
-
-    case 3:
-      setCursor(QCursor(Qt::WaitCursor));
-      applyMonitor();
       setCursor(QCursor(Qt::ArrowCursor));
       break;
 

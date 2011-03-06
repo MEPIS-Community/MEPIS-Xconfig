@@ -50,22 +50,15 @@ public:
     void diskComboChanged();
     void refreshGeneral();
     void refreshMouse();
-    void refreshMonitor();
-    void brandComboChanged();
 
     void applyRestore();
     void applyGeneral();
     void applyMouse();
-    void applyMonitor();
 
 public slots:
 
     virtual void show();
     virtual void on_diskCombo_activated();
-    virtual void on_brandCombo_activated();
-    virtual void on_modelCombo_activated();
-    virtual void on_horizEdit_textEdited();
-    virtual void on_vertEdit_textEdited();
     virtual void on_tabWidget_currentChanged();
     virtual void on_ps2CheckBox_clicked();
     virtual void on_usbCheckBox_clicked();
