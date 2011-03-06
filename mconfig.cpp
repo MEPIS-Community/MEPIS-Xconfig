@@ -1,5 +1,5 @@
 //
-//   Copyright (C) 2003-2010 by Warren Woodford
+//   Copyright (C) 2003-2011 by Warren Woodford
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -142,12 +142,6 @@ void MConfig::refresh() {
       buttonOk->setEnabled(true);
       break;
 
-    case 2:
-      refreshMouse();
-      buttonApply->setEnabled(false);
-      buttonOk->setEnabled(true);
-      break;
-
     default:
       refreshRestore();
       buttonApply->setEnabled(false);
@@ -248,23 +242,6 @@ void MConfig::refreshGeneral() {
   }
 }
 
-void MConfig::refreshMouse() {
-  QString val = getCmdOut("grep '#InputDevice \"PS/2' /etc/X11/xorg.conf");
-  ps2CheckBox->setChecked(val.isEmpty());
-  val = getCmdOut("grep '#InputDevice \"USB' /etc/X11/xorg.conf");
-  usbCheckBox->setChecked(val.isEmpty());
-  val = getCmdOut("grep '#InputDevice \"Ser' /etc/X11/xorg.conf");
-  serialCheckBox->setChecked(val.isEmpty());
-  val = getCmdOut("grep '#InputDevice \"Tou' /etc/X11/xorg.conf");
-  synCheckBox->setChecked(val.isEmpty());
-  val = getCmdOut("grep '#InputDevice \"ALP' /etc/X11/xorg.conf");
-  alpsCheckBox->setChecked(val.isEmpty());
-  val = getCmdOut("grep '#InputDevice \"Sty' /etc/X11/xorg.conf");
-  wacomCheckBox->setChecked(val.isEmpty());
-  val = getCmdOut("grep '#InputDevice \"App' /etc/X11/xorg.conf");
-  appleCheckBox->setChecked(val.isEmpty());
-}
-
 
 // apply but do not close
 void MConfig::applyRestore() {
@@ -308,52 +285,6 @@ void MConfig::applyGeneral() {
   refresh();
 }
 
-void MConfig::applyMouse() {
-  if (ps2CheckBox->isChecked()) {
-    replaceStringInFile("#InputDevice \"PS", " InputDevice \"PS", "/etc/X11/xorg.conf");
-  } else {
-    replaceStringInFile(" InputDevice \"PS", "#InputDevice \"PS", "/etc/X11/xorg.conf");
-  }
-  if (usbCheckBox->isChecked()) {
-    replaceStringInFile("#InputDevice \"USB", " InputDevice \"USB", "/etc/X11/xorg.conf");
-  } else {
-    replaceStringInFile(" InputDevice \"USB", "#InputDevice \"USB", "/etc/X11/xorg.conf");
-  }
-  if (serialCheckBox->isChecked()) {
-    replaceStringInFile("#InputDevice \"Ser", " InputDevice \"Ser", "/etc/X11/xorg.conf");
-  } else {
-    replaceStringInFile(" InputDevice \"Ser", "#InputDevice \"Ser", "/etc/X11/xorg.conf");
-  }
-  if (synCheckBox->isChecked()) {
-    replaceStringInFile("#InputDevice \"Tou", " InputDevice \"Tou", "/etc/X11/xorg.conf");
-  } else {
-    replaceStringInFile(" InputDevice \"Tou", "#InputDevice \"Tou", "/etc/X11/xorg.conf");
-  }
-  if (alpsCheckBox->isChecked()) {
-    replaceStringInFile("#InputDevice \"ALP", " InputDevice \"ALP", "/etc/X11/xorg.conf");
-  } else {
-    replaceStringInFile(" InputDevice \"ALP", "#InputDevice \"ALP", "/etc/X11/xorg.conf");
-  }
-  if (appleCheckBox->isChecked()) {
-    replaceStringInFile("#InputDevice \"App", " InputDevice \"App", "/etc/X11/xorg.conf");
-  } else {
-    replaceStringInFile(" InputDevice \"App", "#InputDevice \"App", "/etc/X11/xorg.conf");
-  }
-  if (wacomCheckBox->isChecked()) {
-    replaceStringInFile("#InputDevice \"Sty", " InputDevice \"Sty", "/etc/X11/xorg.conf");
-    replaceStringInFile("#InputDevice \"Era", " InputDevice \"Era", "/etc/X11/xorg.conf");
-    replaceStringInFile("#InputDevice \"Cur", " InputDevice \"Cur", "/etc/X11/xorg.conf");
-  } else {
-    replaceStringInFile(" InputDevice \"Sty", "#InputDevice \"Sty", "/etc/X11/xorg.conf");
-    replaceStringInFile(" InputDevice \"Era", "#InputDevice \"Era", "/etc/X11/xorg.conf");
-    replaceStringInFile(" InputDevice \"Cur", "#InputDevice \"Cur", "/etc/X11/xorg.conf");
-  }
-
-  QMessageBox::information(0, QString::null,
-    tr("The enabled mouse types have been updated. The new config will take effect when you restart X or reboot.  If a type is not checked, it still may be configured automatically by the X server."));
-  refresh();
-}
-
 
 
 /////////////////////////////////////////////////////////////////////////
@@ -371,34 +302,6 @@ void MConfig::on_diskCombo_activated() {
 
 void MConfig::on_tabWidget_currentChanged() {
   refresh();
-}
-
-void MConfig::on_ps2CheckBox_clicked() {
-  buttonApply->setEnabled(true);
-}
-
-void MConfig::on_usbCheckBox_clicked() {
-  buttonApply->setEnabled(true);
-}
-
-void MConfig::on_serialCheckBox_clicked() {
-  buttonApply->setEnabled(true);
-}
-
-void MConfig::on_synCheckBox_clicked() {
-  buttonApply->setEnabled(true);
-}
-
-void MConfig::on_appleCheckBox_clicked() {
-  buttonApply->setEnabled(true);
-}
-
-void MConfig::on_alpsCheckBox_clicked() {
-  buttonApply->setEnabled(true);
-}
-
-void MConfig::on_wacomCheckBox_clicked() {
-  buttonApply->setEnabled(true);
 }
 
 void MConfig::on_smallerCheck_clicked() {
@@ -424,12 +327,6 @@ void MConfig::on_buttonApply_clicked() {
     case 1:
       setCursor(QCursor(Qt::WaitCursor));
       applyGeneral();
-      setCursor(QCursor(Qt::ArrowCursor));
-      break;
-
-    case 2:
-      setCursor(QCursor(Qt::WaitCursor));
-      applyMouse();
       setCursor(QCursor(Qt::ArrowCursor));
       break;
 
@@ -538,6 +435,6 @@ void MConfig::on_generalHelpPushButton_clicked()
 void MConfig::on_buttonAbout_clicked() {
   QMessageBox::about(0, tr("About"),
     tr("<p><b>MEPIS XConfig</b></p>"
-      "<p>Copyright (C) 2003-10 by MEPIS LLC.  All rights reserved.</p>"));
+      "<p>Copyright (C) 2003-11 by MEPIS LLC.  All rights reserved.</p>"));
 }
 

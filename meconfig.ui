@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>690</width>
+    <width>688</width>
     <height>537</height>
    </rect>
   </property>
@@ -44,7 +44,7 @@
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="repairTabPage">
       <attribute name="icon">
@@ -248,106 +248,6 @@
             </property>
             <property name="checked">
              <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <spacer>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="mouseTabPage">
-      <attribute name="icon">
-       <iconset>
-        <normaloff>../../../../../../share/icons/nuvola_platin_me/16x16/devices/mouse.png</normaloff>../../../../../../share/icons/nuvola_platin_me/16x16/devices/mouse.png</iconset>
-      </attribute>
-      <attribute name="title">
-       <string>Mouse</string>
-      </attribute>
-      <attribute name="toolTip">
-       <string>Mouse configs</string>
-      </attribute>
-      <layout class="QVBoxLayout">
-       <property name="spacing">
-        <number>6</number>
-       </property>
-       <property name="margin">
-        <number>9</number>
-       </property>
-       <item>
-        <widget class="QGroupBox" name="mouseGroupBox">
-         <property name="title">
-          <string>Manually Enable Mouse Types</string>
-         </property>
-         <layout class="QGridLayout">
-          <property name="margin">
-           <number>9</number>
-          </property>
-          <property name="spacing">
-           <number>6</number>
-          </property>
-          <item row="3" column="0" colspan="2">
-           <widget class="QCheckBox" name="serialCheckBox">
-            <property name="text">
-             <string>Serial</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QCheckBox" name="appleCheckBox">
-            <property name="text">
-             <string>AppleTouch</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QCheckBox" name="alpsCheckBox">
-            <property name="text">
-             <string>ALPS</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QCheckBox" name="synCheckBox">
-            <property name="text">
-             <string>Synaptics</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QCheckBox" name="usbCheckBox">
-            <property name="text">
-             <string>USB</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QCheckBox" name="ps2CheckBox">
-            <property name="text">
-             <string>PS/2 (Default)</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QCheckBox" name="wacomCheckBox">
-            <property name="text">
-             <string>Wacom </string>
             </property>
            </widget>
           </item>

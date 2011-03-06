@@ -49,24 +49,15 @@ public:
     void refreshRestore();
     void diskComboChanged();
     void refreshGeneral();
-    void refreshMouse();
 
     void applyRestore();
     void applyGeneral();
-    void applyMouse();
 
 public slots:
 
     virtual void show();
     virtual void on_diskCombo_activated();
     virtual void on_tabWidget_currentChanged();
-    virtual void on_ps2CheckBox_clicked();
-    virtual void on_usbCheckBox_clicked();
-    virtual void on_serialCheckBox_clicked();
-    virtual void on_synCheckBox_clicked();
-    virtual void on_appleCheckBox_clicked();
-    virtual void on_alpsCheckBox_clicked();
-    virtual void on_wacomCheckBox_clicked();
     virtual void on_smallerCheck_clicked();
     virtual void on_mediumCheck_clicked();
     virtual void on_largerCheck_clicked();
