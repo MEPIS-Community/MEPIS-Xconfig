@@ -58,9 +58,6 @@ public slots:
     virtual void show();
     virtual void on_diskCombo_activated();
     virtual void on_tabWidget_currentChanged();
-    virtual void on_smallerCheck_clicked();
-    virtual void on_mediumCheck_clicked();
-    virtual void on_largerCheck_clicked();
     virtual void on_buttonApply_clicked();
     virtual void on_buttonCancel_clicked();
     virtual void on_buttonOk_clicked();

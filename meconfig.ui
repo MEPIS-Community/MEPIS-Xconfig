@@ -191,7 +191,7 @@
           </sizepolicy>
          </property>
          <property name="title">
-          <string>Relative Size of Text</string>
+          <string>Information</string>
          </property>
          <layout class="QGridLayout">
           <property name="margin">
@@ -200,56 +200,15 @@
           <property name="spacing">
            <number>6</number>
           </property>
-          <item row="0" column="2">
-           <widget class="QRadioButton" name="smallerCheck">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="toolTip">
-             <string>Select for small text</string>
-            </property>
-            <property name="text">
-             <string>Small (75 dpi)</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QRadioButton" name="mediumCheck">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="toolTip">
-             <string>Select for medium text</string>
-            </property>
-            <property name="text">
-             <string>Medium (96 dpi)</string>
-            </property>
-           </widget>
-          </item>
           <item row="0" column="0">
-           <widget class="QRadioButton" name="largerCheck">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="toolTip">
-             <string>Select for large text</string>
-            </property>
+           <widget class="QLabel" name="gfxAdapter">
             <property name="text">
-             <string>Large (120 dpi)</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
+             <string>Graphics Adapter:</string>
             </property>
            </widget>
+          </item>
+          <item row="0" column="1" colspan="2">
+           <widget class="QLineEdit" name="gfxAdapterEdit"/>
           </item>
          </layout>
         </widget>
@@ -444,9 +403,6 @@
   <tabstop>buttonCancel</tabstop>
   <tabstop>diskCombo</tabstop>
   <tabstop>rootCombo</tabstop>
-  <tabstop>largerCheck</tabstop>
-  <tabstop>mediumCheck</tabstop>
-  <tabstop>smallerCheck</tabstop>
  </tabstops>
  <resources/>
  <connections/>

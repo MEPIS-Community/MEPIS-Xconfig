@@ -229,17 +229,21 @@ void MConfig::diskComboChanged() {
 }
 
 void MConfig::refreshGeneral() {
-  QString val = getCmdOut("grep 'dpi 75' /etc/kde4/kdm/kdmrc");
-  smallerCheck->setChecked(!val.isEmpty());
-  if (val.isEmpty()) {
-    // not small
-    val = getCmdOut("grep 'dpi 120' /etc/kde4/kdm/kdmrc");
-    largerCheck->setChecked(!val.isEmpty());
-    if (val.isEmpty()) {
-      // must be medium
-      mediumCheck->setChecked(true);
-    }
+  char line[130];
+  int i;
+
+  FILE *fp = popen("lspci | grep VGA", "r");
+  if (fp == NULL) {
+    return;
   }
+  fgets(line, sizeof line, fp);
+  i = strlen(line);
+  line[i-1] = '\0';
+  pclose(fp);
+  QString vga = QString("%1").arg(line);
+  gfxAdapterEdit->setText(vga);
+
+  buttonApply->setEnabled(false);
 }
 
 
@@ -266,22 +270,6 @@ void MConfig::applyRestore() {
 }
 
 void MConfig::applyGeneral() {
-  if (smallerCheck->isChecked()) {
-    replaceStringInFile("dpi 100", "dpi 75", "/etc/kde4/kdm/kdmrc");
-    replaceStringInFile("dpi 96", "dpi 75", "/etc/kde4/kdm/kdmrc");
-    replaceStringInFile("dpi 120", "dpi 75", "/etc/kde4/kdm/kdmrc");
-  } else if (mediumCheck->isChecked()) {
-    replaceStringInFile("dpi 75", "dpi 96", "/etc/kde4/kdm/kdmrc");
-    replaceStringInFile("dpi 100", "dpi 96", "/etc/kde4/kdm/kdmrc");
-    replaceStringInFile("dpi 120", "dpi 96", "/etc/kde4/kdm/kdmrc");
-  } else {
-    // must be larger
-    replaceStringInFile("dpi 75", "dpi 120", "/etc/kde4/kdm/kdmrc");
-    replaceStringInFile("dpi 100", "dpi 120", "/etc/kde4/kdm/kdmrc");
-    replaceStringInFile("dpi 96", "dpi 120", "/etc/kde4/kdm/kdmrc");
-  }
-  QMessageBox::information(0, QString::null,
-    tr("The display text size (dpi) has been updated. The change will take effect when you restart X or reboot"));
   refresh();
 }
 
@@ -302,18 +290,6 @@ void MConfig::on_diskCombo_activated() {
 
 void MConfig::on_tabWidget_currentChanged() {
   refresh();
-}
-
-void MConfig::on_smallerCheck_clicked() {
-  buttonApply->setEnabled(true);
-}
-
-void MConfig::on_mediumCheck_clicked() {
-  buttonApply->setEnabled(true);
-}
-
-void MConfig::on_largerCheck_clicked() {
-  buttonApply->setEnabled(true);
 }
 
 // apply but do not close
